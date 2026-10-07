@@ -1,0 +1,12 @@
+/* Keep custom CSS minimal; Tailwind handles most styling. */
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Visible, on-brand focus for keyboard users */
+:focus-visible {
+  outline: 2px solid #e879f9;
+  outline-offset: 2px;
+}
+
