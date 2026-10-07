@@ -4,7 +4,7 @@ require_once '../config/database.php';
 require_once '../includes/layout.php';
 require_once '../includes/functions.php';
 
-require_role(['Faculty']);
+require_role(['Student', 'Faculty', 'Admin', 'StatStaff']);
 
 // Get all course sections for the master schedule
 $sql = "SELECT

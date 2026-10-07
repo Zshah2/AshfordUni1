@@ -13,6 +13,7 @@ function nav_items(string $role): array
                 ['Overview', 'dashboard.php'],
                 ['Course Registration', 'registration.php'],
                 ['My Schedule', 'schedule.php'],
+                ['Master Schedule', '../faculty/master-schedule.php'],
                 ['Unofficial Transcript', 'transcript.php'],
                 ['Degree Audit', 'degree-audit.php'],
                 ['Holds', 'holds.php'],
@@ -27,7 +28,7 @@ function nav_items(string $role): array
             return [
                 ['Overview', 'dashboard.php'],
                 ['My Schedule', 'schedule.php'],
-                ['Master Schedule', 'master-schedule.php'],
+                ['Master Schedule', '../faculty/master-schedule.php'],
                 ['Course Rosters', 'rosters.php'],
                 ['Attendance History', 'attendance-history.php'],
                 ['Advisees', 'advisees.php'],
@@ -40,13 +41,15 @@ function nav_items(string $role): array
                 ['Overview', 'dashboard.php'],
                 ['Users', 'users.php'],
                 ['Academic Management', 'academic.php'],
-                ['Sections', 'sections.php']
+                ['Sections', 'sections.php'],
+                ['Master Schedule', '../faculty/master-schedule.php']
             ];
 
         case 'StatStaff':
             return [
                 ['Overview', 'dashboard.php'],
-                ['Anonymous Reports', 'reports.php']
+                ['Anonymous Reports', 'reports.php'],
+                ['Master Schedule', '../faculty/master-schedule.php']
             ];
 
         default:
