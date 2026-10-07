@@ -9,7 +9,19 @@ require_role(['Student', 'Faculty', 'Admin', 'StatStaff']);
 // Get all course sections for the master schedule
 $sql = "SELECT
             Course_Section.CRN,
-            Course.course_ID,
+            CASE Department.dept_Name
+                WHEN 'Computer Science' THEN CONCAT('CS', Course.course_ID)
+                WHEN 'Business' THEN CONCAT('BUS', Course.course_ID)
+                WHEN 'Mathematics' THEN CONCAT('MA', Course.course_ID)
+                WHEN 'Natural Sciences' THEN CONCAT('NS', Course.course_ID)
+                WHEN 'Engineering' THEN CONCAT('ENG', Course.course_ID)
+                WHEN 'English' THEN CONCAT('ENGL', Course.course_ID)
+                WHEN 'Social Sciences' THEN CONCAT('SS', Course.course_ID)
+                WHEN 'Education' THEN CONCAT('ED', Course.course_ID)
+                WHEN 'Health Sciences' THEN CONCAT('HS', Course.course_ID)
+                WHEN 'Arts and Media' THEN CONCAT('ART', Course.course_ID)
+                ELSE CONCAT(Department.dept_Name, Course.course_ID)
+            END AS course_Key,
             Course.course_Name,
             Course_Section.section_No,
             Semester.semester_Name,
@@ -19,6 +31,8 @@ $sql = "SELECT
         FROM Course_Section
         JOIN Course
             ON Course.course_ID = Course_Section.course_ID
+        JOIN Department
+            ON Department.dept_ID = Course.dept_ID
         JOIN Semester
             ON Semester.semester_ID = Course_Section.semester_ID
         JOIN User
@@ -32,7 +46,7 @@ $sections = all_rows($pdo, $sql);
 
 page_start(
     'Master Schedule',
-    'Faculty',
+    $_SESSION['user_type'] ?? 'Faculty',
     'master-schedule.php'
 );
 
@@ -80,7 +94,7 @@ page_start(
                     </td>
 
                     <td>
-                        <?= e($section['course_ID']) ?>
+                        <?= e($section['course_Key']) ?>
                     </td>
 
                     <td>

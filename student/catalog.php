@@ -7,9 +7,22 @@ require_once '../includes/functions.php';
 require_role(['Student']);
 
 
-// Get all courses and their departments
+// Get all courses and their departments with a mnemonic course key.
 $sql = "SELECT
             Course.course_ID,
+            CASE Department.dept_Name
+                WHEN 'Computer Science' THEN CONCAT('CS', Course.course_ID)
+                WHEN 'Business' THEN CONCAT('BUS', Course.course_ID)
+                WHEN 'Mathematics' THEN CONCAT('MA', Course.course_ID)
+                WHEN 'Natural Sciences' THEN CONCAT('NS', Course.course_ID)
+                WHEN 'Engineering' THEN CONCAT('ENG', Course.course_ID)
+                WHEN 'English' THEN CONCAT('ENGL', Course.course_ID)
+                WHEN 'Social Sciences' THEN CONCAT('SS', Course.course_ID)
+                WHEN 'Education' THEN CONCAT('ED', Course.course_ID)
+                WHEN 'Health Sciences' THEN CONCAT('HS', Course.course_ID)
+                WHEN 'Arts and Media' THEN CONCAT('ART', Course.course_ID)
+                ELSE CONCAT(Department.dept_Name, Course.course_ID)
+            END AS course_Key,
             Course.course_Name,
             Course.course_Credits,
             Course.course_Type,
@@ -58,7 +71,7 @@ page_start(
             <tr>
 
                 <td>
-                    <?= e($course['course_ID']) ?>
+                    <?= e($course['course_Key']) ?>
                 </td>
 
                 <td>
