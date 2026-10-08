@@ -9,20 +9,41 @@ require_role(['Student', 'Faculty', 'Admin', 'StatStaff']);
 $searchTerm = trim($_GET['search'] ?? '');
 $pageSize = 25;
 $currentPage = max(1, (int) ($_GET['page'] ?? 1));
+$courseKeyExpression = "
+    CASE Department.dept_Name
+        WHEN 'Computer Science' THEN CONCAT('CS', Course.course_ID)
+        WHEN 'Business' THEN CONCAT('BUS', Course.course_ID)
+        WHEN 'Mathematics' THEN CONCAT('MA', Course.course_ID)
+        WHEN 'Natural Sciences' THEN CONCAT('NS', Course.course_ID)
+        WHEN 'Engineering' THEN CONCAT('ENG', Course.course_ID)
+        WHEN 'English' THEN CONCAT('ENGL', Course.course_ID)
+        WHEN 'Social Sciences' THEN CONCAT('SS', Course.course_ID)
+        WHEN 'Education' THEN CONCAT('ED', Course.course_ID)
+        WHEN 'Health Sciences' THEN CONCAT('HS', Course.course_ID)
+        WHEN 'Arts and Media' THEN CONCAT('ART', Course.course_ID)
+        ELSE CONCAT(Department.dept_Name, Course.course_ID)
+    END";
 $searchCondition = '';
 $searchParameters = [];
 
 if ($searchTerm !== '') {
     $searchCondition = "
         AND (
-            CONCAT(Course.course_ID) LIKE ?
+            " . $courseKeyExpression . " LIKE ?
+            OR Department.dept_Name LIKE ?
             OR Course.course_Name LIKE ?
             OR CONCAT(User.first_Name, ' ', User.last_Name) LIKE ?
             OR Semester.semester_Name LIKE ?
         )
     ";
     $searchValue = '%' . $searchTerm . '%';
-    $searchParameters = [$searchValue, $searchValue, $searchValue, $searchValue];
+    $searchParameters = [
+        $searchValue,
+        $searchValue,
+        $searchValue,
+        $searchValue,
+        $searchValue
+    ];
 }
 
 // Count matching sections before selecting the requested page.
