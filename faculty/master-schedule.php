@@ -29,7 +29,8 @@ $searchParameters = [];
 if ($searchTerm !== '') {
     $searchCondition = "
         AND (
-            " . $courseKeyExpression . " LIKE ?
+            CONCAT(Course_Section.CRN) LIKE ?
+            OR " . $courseKeyExpression . " LIKE ?
             OR Department.dept_Name LIKE ?
             OR Course.course_Name LIKE ?
             OR CONCAT(User.first_Name, ' ', User.last_Name) LIKE ?
@@ -38,6 +39,7 @@ if ($searchTerm !== '') {
     ";
     $searchValue = '%' . $searchTerm . '%';
     $searchParameters = [
+        $searchValue,
         $searchValue,
         $searchValue,
         $searchValue,
@@ -130,7 +132,7 @@ page_start(
         id="scheduleSearch"
         name="search"
         value="<?= e($searchTerm) ?>"
-        placeholder="Search by course, faculty, or semester"
+        placeholder="Search by CRN, course, faculty, or semester"
     >
 
     <button class="btn" type="submit">Search</button>
