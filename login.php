@@ -13,10 +13,10 @@ if ($email === '' || $password === '') {
     exit;
 }
 
-$sql = "SELECT Login.*, User.first_Name, User.last_Name
-        FROM Login
-        JOIN User ON User.user_ID = Login.user_ID
-        WHERE Login.user_Email = ?
+$sql = "SELECT login.*, user.first_Name, user.last_Name
+        FROM login
+        JOIN user ON user.user_ID = login.user_ID
+        WHERE login.user_Email = ?
         LIMIT 1";
 
 $stmt = $pdo->prepare($sql);
@@ -50,7 +50,7 @@ if (!$passwordCorrect) {
         $locked = 0;
     }
 
-    $sql = "UPDATE Login
+    $sql = "UPDATE login
             SET no_Of_Tries = ?, lock_var = ?
             WHERE user_ID = ?";
 
@@ -74,7 +74,7 @@ if (!$passwordCorrect) {
     exit;
 }
 
-$sql = "UPDATE Login
+$sql = "UPDATE login
         SET no_Of_Tries = 0, lock_var = 0
         WHERE user_ID = ?";
 

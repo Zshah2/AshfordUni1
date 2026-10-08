@@ -24,7 +24,7 @@ if ($email === '' || $password === '') {
 } elseif (strlen($password) < 8) {
     $error = 'Password must be at least 8 characters.';
 } else {
-    $stmt = $pdo->prepare('SELECT user_ID FROM Login WHERE user_Email = ?');
+    $stmt = $pdo->prepare('SELECT user_ID FROM login WHERE user_Email = ?');
     $stmt->execute([$email]);
 
     if ($stmt->fetch()) {
@@ -55,7 +55,7 @@ if ($email === '' || $password === '') {
             ]);
 
             $loginStatement = $pdo->prepare(
-                'INSERT INTO Login
+                'INSERT INTO login
                  (user_ID, user_Email, user_Password, no_Of_Tries, lock_var, user_Type)
                  VALUES (?, ?, ?, 0, FALSE, ?)'
             );
