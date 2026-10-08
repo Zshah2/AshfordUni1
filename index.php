@@ -12,16 +12,8 @@ if (!empty($_SESSION['user_id'])) {
 $error = $_SESSION['login_error'] ?? '';
 $registrationError = $_SESSION['registration_error'] ?? '';
 $registrationSuccess = $_SESSION['registration_success'] ?? '';
-$passwordResetSuccess = $_SESSION['password_reset_success'] ?? '';
 $registrationInput = $_SESSION['registration_input'] ?? [];
-
-unset(
-    $_SESSION['login_error'],
-    $_SESSION['registration_error'],
-    $_SESSION['registration_success'],
-    $_SESSION['password_reset_success'],
-    $_SESSION['registration_input']
-);
+unset($_SESSION['login_error'], $_SESSION['registration_error'], $_SESSION['registration_success'], $_SESSION['registration_input']);
 ?>
 
 <!DOCTYPE html>
@@ -57,12 +49,6 @@ unset(
             </div>
         <?php endif; ?>
 
-        <?php if ($passwordResetSuccess): ?>
-    <div class="login-success" role="status">
-        <?php echo htmlspecialchars($passwordResetSuccess); ?>
-    </div>
-<?php endif; ?>
-
         <form class="login-form" action="login.php" method="post">
             <label for="email">
                 University email
@@ -76,23 +62,19 @@ unset(
                 >
             </label>
 
-<label for="password">
-    Password
-    <input
-        type="password"
-        id="password"
-        name="password"
-        autocomplete="current-password"
-        placeholder="Enter your password"
-        required
-    >
-</label>
+            <label for="password">
+                Password
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    autocomplete="current-password"
+                    placeholder="Enter your password"
+                    required
+                >
+            </label>
 
-<p class="login-help">
-    <a href="forgot_password.php">Forgot Password?</a>
-</p>
-
-<button class="login-button" type="submit">Sign in</button>
+            <button class="login-button" type="submit">Sign in</button>
         </form>
 
         <p class="login-help">
