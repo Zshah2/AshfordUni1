@@ -112,6 +112,8 @@ page_start(
         placeholder="Search by course, faculty, or semester"
     >
 
+    <button class="btn" type="submit">Search</button>
+
 </form>
 
 
@@ -211,19 +213,6 @@ page_start(
     </nav>
 
 <?php endif; ?>
-
-
-<script>
-
-const searchBox = document.getElementById('scheduleSearch');
-
-searchBox.addEventListener('input', function () {
-    window.location.href =
-        'master-schedule.php?search=' +
-        encodeURIComponent(searchBox.value);
-});
-
-</script>
 
 
 <?php
