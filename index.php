@@ -75,19 +75,23 @@ unset(
                 >
             </label>
 
-            <label for="password">
-                Password
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    autocomplete="current-password"
-                    placeholder="Enter your password"
-                    required
-                >
-            </label>
+<label for="password">
+    Password
+    <input
+        type="password"
+        id="password"
+        name="password"
+        autocomplete="current-password"
+        placeholder="Enter your password"
+        required
+    >
+</label>
 
-            <button class="login-button" type="submit">Sign in</button>
+<p class="login-help">
+    <a href="forgot_password.php">Forgot Password?</a>
+</p>
+
+<button class="login-button" type="submit">Sign in</button>
         </form>
 
         <p class="login-help">
