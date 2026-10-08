@@ -34,11 +34,11 @@
 
   <div class="border-t border-indigo-200/80 bg-white/80 dark:border-fuchsia-500/20 dark:bg-[#0a0f1f]/80">
     <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-3 px-4 py-4 sm:px-6">
-      <a class="rounded-xl bg-indigo-600 px-4 py-2 text-sm font-semibold text-white" href="<?= htmlspecialchars(url('/calendar')) ?>">Academic calendar</a>
-      <a class="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-800 dark:border-slate-600 dark:bg-slate-900 dark:text-white" href="<?= htmlspecialchars(url('/schedule/fall-2026')) ?>">Fall 2026 schedule</a>
-      <a class="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-800 dark:border-slate-600 dark:bg-slate-900 dark:text-white" href="<?= htmlspecialchars(url('/schedule/spring-2027')) ?>">Spring 2027 schedule</a>
-      <a class="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-800 dark:border-slate-600 dark:bg-slate-900 dark:text-white" href="<?= htmlspecialchars(url('/catalog')) ?>">University catalog</a>
-      <a class="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-800 dark:border-slate-600 dark:bg-slate-900 dark:text-white" href="<?= htmlspecialchars(url('/login.php')) ?>">Login</a>
+      <a class="rounded-xl bg-indigo-600 px-4 py-2 text-sm font-semibold text-white" href="/faculty/master-schedule.php">Academic calendar</a>
+      <a class="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-800 dark:border-slate-600 dark:bg-slate-900 dark:text-white" href="/faculty/master-schedule.php">Fall 2026 schedule</a>
+      <a class="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-800 dark:border-slate-600 dark:bg-slate-900 dark:text-white" href="/faculty/master-schedule.php">Spring 2027 schedule</a>
+      <a class="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-800 dark:border-slate-600 dark:bg-slate-900 dark:text-white" href="/student/catalog.php">University catalog</a>
+      <a class="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-800 dark:border-slate-600 dark:bg-slate-900 dark:text-white" href="/login.php">Login</a>
     </div>
   </div>
   <a href="#explore" class="flex items-center justify-center gap-2 border-t border-fuchsia-500/30 bg-gradient-to-r from-violet-600 via-fuchsia-500 to-amber-400 px-4 py-4 text-sm font-semibold text-white shadow-inner shadow-black/20 transition hover:brightness-110">

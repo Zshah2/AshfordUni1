@@ -109,6 +109,7 @@ VALUES
 (1110, 1, 'Operating Systems', 4, 'Study of operating systems, including foundational and intermediate concepts, practical applications, and analysis of relevant problems.', 'Undergraduate'),
 (1111, 1, 'Algorithm Design', 4, 'Study of algorithm design, including foundational and intermediate concepts, practical applications, and analysis of relevant problems.', 'Undergraduate'),
 (1112, 1, 'Introduction to Cybersecurity', 4, 'Study of introduction to cybersecurity, including foundational and intermediate concepts, practical applications, and analysis of relevant problems.', 'Undergraduate'),
+(510, 1, 'Computer Science Special Topics', 4, 'Advanced computer science studies covering selected topics, practical applications, and research-oriented analysis.', 'Graduate'),
 (1113, 1, 'Human-Computer Interaction', 4, 'Study of human-computer interaction, including foundational and intermediate concepts, practical applications, and analysis of relevant problems.', 'Undergraduate'),
 (1114, 1, 'Mobile Application Development', 4, 'Study of mobile application development, including foundational and intermediate concepts, practical applications, and analysis of relevant problems.', 'Undergraduate'),
 (1115, 1, 'Data Science Fundamentals', 4, 'Study of data science fundamentals, including foundational and intermediate concepts, practical applications, and analysis of relevant problems.', 'Undergraduate'),

@@ -8,7 +8,8 @@ function one(
 ): ?array {
 
     $stmt = $pdo->prepare($sql);
-    $stmt->execute($params);
+    bind_params($stmt, $params);
+    $stmt->execute();
 
     $row = $stmt->fetch();
 
@@ -28,9 +29,23 @@ function all_rows(
 ): array {
 
     $stmt = $pdo->prepare($sql);
-    $stmt->execute($params);
+    bind_params($stmt, $params);
+    $stmt->execute();
 
     return $stmt->fetchAll();
+}
+
+
+function bind_params(
+    PDOStatement $stmt,
+    array $params
+): void {
+
+    foreach ($params as $index => $value) {
+        $type = is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR;
+        $stmt->bindValue($index + 1, $value, $type);
+    }
+
 }
 
 

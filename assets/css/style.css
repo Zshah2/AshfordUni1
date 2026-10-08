@@ -800,6 +800,19 @@ tbody tr:hover {
     background: #fafbfe;
 }
 
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 18px;
+}
+
+.pagination span {
+    color: #667085;
+    font-size: 13px;
+}
+
 
 /* FORMS */
 

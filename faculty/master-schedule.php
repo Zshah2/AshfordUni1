@@ -6,7 +6,46 @@ require_once '../includes/functions.php';
 
 require_role(['Student', 'Faculty', 'Admin', 'StatStaff']);
 
-// Get all course sections for the master schedule
+$searchTerm = trim($_GET['search'] ?? '');
+$pageSize = 25;
+$currentPage = max(1, (int) ($_GET['page'] ?? 1));
+$searchCondition = '';
+$searchParameters = [];
+
+if ($searchTerm !== '') {
+    $searchCondition = "
+        AND (
+            CONCAT(Course.course_ID) LIKE ?
+            OR Course.course_Name LIKE ?
+            OR CONCAT(User.first_Name, ' ', User.last_Name) LIKE ?
+            OR Semester.semester_Name LIKE ?
+        )
+    ";
+    $searchValue = '%' . $searchTerm . '%';
+    $searchParameters = [$searchValue, $searchValue, $searchValue, $searchValue];
+}
+
+// Count matching sections before selecting the requested page.
+$countSql = "
+    SELECT COUNT(*)
+    FROM Course_Section
+    JOIN Course
+        ON Course.course_ID = Course_Section.course_ID
+    JOIN Department
+        ON Department.dept_ID = Course.dept_ID
+    JOIN Semester
+        ON Semester.semester_ID = Course_Section.semester_ID
+    JOIN User
+        ON User.user_ID = Course_Section.faculty_ID
+    WHERE 1 = 1
+    " . $searchCondition;
+
+$totalSections = (int) one($pdo, $countSql, $searchParameters)['COUNT(*)'];
+$totalPages = max(1, (int) ceil($totalSections / $pageSize));
+$currentPage = min($currentPage, $totalPages);
+$offset = ($currentPage - 1) * $pageSize;
+
+// Get the requested page of course sections for the master schedule.
 $sql = "SELECT
             Course_Section.CRN,
             CASE Department.dept_Name
@@ -37,11 +76,18 @@ $sql = "SELECT
             ON Semester.semester_ID = Course_Section.semester_ID
         JOIN User
             ON User.user_ID = Course_Section.faculty_ID
+        WHERE 1 = 1
+        " . $searchCondition . "
         ORDER BY
             Semester.semester_ID,
-            Course.course_ID";
+            Course.course_ID
+        LIMIT ? OFFSET ?";
 
-$sections = all_rows($pdo, $sql);
+$sections = all_rows(
+    $pdo,
+    $sql,
+    array_merge($searchParameters, [$pageSize, $offset])
+);
 
 
 page_start(
@@ -52,7 +98,7 @@ page_start(
 
 ?>
 
-<div class="card">
+<form class="card" method="get" action="master-schedule.php">
 
     <label for="scheduleSearch">
         <strong>Search Schedule</strong>
@@ -61,10 +107,12 @@ page_start(
     <input
         type="text"
         id="scheduleSearch"
+        name="search"
+        value="<?= e($searchTerm) ?>"
         placeholder="Search by course, faculty, or semester"
     >
 
-</div>
+</form>
 
 
 <div class="table-wrap">
@@ -130,30 +178,49 @@ page_start(
 
 </div>
 
+<?php if ($totalPages > 1): ?>
+
+    <nav class="pagination" aria-label="Master schedule pages">
+
+        <?php if ($currentPage > 1): ?>
+
+            <a
+                class="btn small"
+                href="?page=<?= $currentPage - 1 ?><?= $searchTerm !== '' ? '&search=' . urlencode($searchTerm) : '' ?>"
+            >
+                Previous
+            </a>
+
+        <?php endif; ?>
+
+        <span>
+            Page <?= $currentPage ?> of <?= $totalPages ?>
+        </span>
+
+        <?php if ($currentPage < $totalPages): ?>
+
+            <a
+                class="btn small"
+                href="?page=<?= $currentPage + 1 ?><?= $searchTerm !== '' ? '&search=' . urlencode($searchTerm) : '' ?>"
+            >
+                Next
+            </a>
+
+        <?php endif; ?>
+
+    </nav>
+
+<?php endif; ?>
+
 
 <script>
 
 const searchBox = document.getElementById('scheduleSearch');
-const scheduleRows = document.querySelectorAll(
-    '#scheduleTable tbody tr'
-);
 
 searchBox.addEventListener('input', function () {
-
-    const searchText = searchBox.value.toLowerCase();
-
-    scheduleRows.forEach(function (row) {
-
-        const rowText = row.innerText.toLowerCase();
-
-        if (rowText.includes(searchText)) {
-            row.style.display = '';
-        } else {
-            row.style.display = 'none';
-        }
-
-    });
-
+    window.location.href =
+        'master-schedule.php?search=' +
+        encodeURIComponent(searchBox.value);
 });
 
 </script>

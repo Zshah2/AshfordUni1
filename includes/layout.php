@@ -10,46 +10,46 @@ function nav_items(string $role): array
 
         case 'Student':
             return [
-                ['Overview', 'dashboard.php'],
-                ['Course Registration', 'registration.php'],
-                ['My Schedule', 'schedule.php'],
-                ['Master Schedule', '../faculty/master-schedule.php'],
-                ['Unofficial Transcript', 'transcript.php'],
-                ['Degree Audit', 'degree-audit.php'],
-                ['Holds', 'holds.php'],
-                ['My Advisor', 'advisor.php'],
-                ['Majors & Minors', 'programs.php'],
-                ['Catalog', 'catalog.php'],
-                ['Buildings', 'buildings.php'],
-                ['My Information', 'information.php']
+                ['Overview', '/student/dashboard.php'],
+                ['Course Registration', '/student/registration.php'],
+                ['My Schedule', '/student/schedule.php'],
+                ['Master Schedule', '/faculty/master-schedule.php'],
+                ['Unofficial Transcript', '/student/transcript.php'],
+                ['Degree Audit', '/student/degree-audit.php'],
+                ['Holds', '/student/holds.php'],
+                ['My Advisor', '/student/advisor.php'],
+                ['Majors & Minors', '/student/programs.php'],
+                ['Catalog', '/student/catalog.php'],
+                ['Buildings', '/student/buildings.php'],
+                ['My Information', '/student/information.php']
             ];
 
         case 'Faculty':
             return [
-                ['Overview', 'dashboard.php'],
-                ['My Schedule', 'schedule.php'],
-                ['Master Schedule', '../faculty/master-schedule.php'],
-                ['Course Rosters', 'rosters.php'],
-                ['Attendance History', 'attendance-history.php'],
-                ['Advisees', 'advisees.php'],
-                ['Catalog', 'catalog.php'],
-                ['My Profile', 'profile.php']
+                ['Overview', '/faculty/dashboard.php'],
+                ['My Schedule', '/faculty/schedule.php'],
+                ['Master Schedule', '/faculty/master-schedule.php'],
+                ['Course Rosters', '/faculty/rosters.php'],
+                ['Attendance History', '/faculty/attendance-history.php'],
+                ['Advisees', '/faculty/advisees.php'],
+                ['Catalog', '/faculty/catalog.php'],
+                ['My Profile', '/faculty/profile.php']
             ];
 
         case 'Admin':
             return [
-                ['Overview', 'dashboard.php'],
-                ['Users', 'users.php'],
-                ['Academic Management', 'academic.php'],
-                ['Sections', 'sections.php'],
-                ['Master Schedule', '../faculty/master-schedule.php']
+                ['Overview', '/admin/dashboard.php'],
+                ['Users', '/admin/users.php'],
+                ['Academic Management', '/admin/academic.php'],
+                ['Sections', '/admin/sections.php'],
+                ['Master Schedule', '/faculty/master-schedule.php']
             ];
 
         case 'StatStaff':
             return [
-                ['Overview', 'dashboard.php'],
-                ['Anonymous Reports', 'reports.php'],
-                ['Master Schedule', '../faculty/master-schedule.php']
+                ['Overview', '/statistics/dashboard.php'],
+                ['Anonymous Reports', '/statistics/reports.php'],
+                ['Master Schedule', '/faculty/master-schedule.php']
             ];
 
         default:
