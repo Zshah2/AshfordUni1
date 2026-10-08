@@ -22,6 +22,7 @@ unset(
     $_SESSION['password_reset_success'],
     $_SESSION['registration_input']
 );
+?>
 
 <!DOCTYPE html>
 <html lang="en">
