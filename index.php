@@ -12,9 +12,16 @@ if (!empty($_SESSION['user_id'])) {
 $error = $_SESSION['login_error'] ?? '';
 $registrationError = $_SESSION['registration_error'] ?? '';
 $registrationSuccess = $_SESSION['registration_success'] ?? '';
+$passwordResetSuccess = $_SESSION['password_reset_success'] ?? '';
 $registrationInput = $_SESSION['registration_input'] ?? [];
-unset($_SESSION['login_error'], $_SESSION['registration_error'], $_SESSION['registration_success'], $_SESSION['registration_input']);
-?>
+
+unset(
+    $_SESSION['login_error'],
+    $_SESSION['registration_error'],
+    $_SESSION['registration_success'],
+    $_SESSION['password_reset_success'],
+    $_SESSION['registration_input']
+);
 
 <!DOCTYPE html>
 <html lang="en">
@@ -48,6 +55,12 @@ unset($_SESSION['login_error'], $_SESSION['registration_error'], $_SESSION['regi
                 <?php echo htmlspecialchars($registrationSuccess); ?>
             </div>
         <?php endif; ?>
+
+        <?php if ($passwordResetSuccess): ?>
+    <div class="login-success" role="status">
+        <?php echo htmlspecialchars($passwordResetSuccess); ?>
+    </div>
+<?php endif; ?>
 
         <form class="login-form" action="login.php" method="post">
             <label for="email">
