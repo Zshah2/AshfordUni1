@@ -771,13 +771,14 @@ a {
 
 table {
     width: 100%;
+    min-width: 900px;
     border-collapse: collapse;
     background-color: white;
 }
 
 th,
 td {
-    padding: 13px 15px;
+    padding: 14px 16px;
     border-bottom: 1px solid #e1e6ed;
     text-align: left;
     vertical-align: middle;
@@ -785,11 +786,26 @@ td {
 
 th {
     color: #34415a;
-    background: #f3f6fa;
+    background: linear-gradient(180deg, #f7f9fc 0%, #eef2f7 100%);
     font-size: 11px;
     font-weight: 800;
     letter-spacing: 0.06em;
     text-transform: uppercase;
+}
+
+td {
+    color: #344054;
+    font-size: 13px;
+}
+
+td:first-child,
+th:first-child {
+    padding-left: 18px;
+}
+
+td:last-child,
+th:last-child {
+    padding-right: 18px;
 }
 
 tbody tr:last-child td {
@@ -797,7 +813,29 @@ tbody tr:last-child td {
 }
 
 tbody tr:hover {
-    background: #fafbfe;
+    background: #f7f9fd;
+}
+
+tbody tr:hover td:first-child {
+    box-shadow: inset 3px 0 0 #1e3366;
+}
+
+.dashboard-page .table-wrap {
+    border-radius: 14px;
+}
+
+.dashboard-page table {
+    min-width: 700px;
+}
+
+.dashboard-page th {
+    padding-top: 13px;
+    padding-bottom: 13px;
+}
+
+.dashboard-page td {
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
 .pagination {
@@ -856,6 +894,41 @@ label {
     grid-template-columns: 2fr 1fr 1fr;
     gap: 10px;
     margin-bottom: 18px;
+}
+
+.schedule-filter {
+    display: grid;
+    grid-template-columns: minmax(260px, 1fr) minmax(460px, 1.4fr);
+    gap: 20px;
+    align-items: end;
+    margin-bottom: 20px;
+}
+
+.schedule-filter-search input {
+    min-height: 46px;
+}
+
+.schedule-filter-controls {
+    display: grid;
+    grid-template-columns: minmax(180px, 1fr) minmax(180px, 1fr) auto;
+    gap: 12px;
+    align-items: end;
+}
+
+.schedule-filter-controls label {
+    margin: 0;
+}
+
+.schedule-filter-controls select {
+    min-height: 46px;
+}
+
+.schedule-filter-controls .btn {
+    min-height: 46px;
+}
+
+.student-empty {
+    color: #a2aaba;
 }
 
 
@@ -978,8 +1051,14 @@ label {
         padding: 22px 20px 30px;
     }
 
-    .filters {
+    .filters,
+    .schedule-filter,
+    .schedule-filter-controls {
         grid-template-columns: 1fr;
+    }
+
+    .schedule-filter-controls .btn {
+        width: 100%;
     }
 }
 

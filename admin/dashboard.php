@@ -16,6 +16,11 @@ $assignedSections = one(
     'SELECT COUNT(*) AS total FROM Course_Section'
 );
 
+$totalEnrollments = one(
+    $pdo,
+    'SELECT COUNT(*) AS total FROM Enrollment'
+);
+
 page_start(
     'Welcome, ' . ($_SESSION['name'] ?? 'Admin'),
     'Admin',
@@ -38,14 +43,20 @@ page_start(
     <section class="dashboard-stats" aria-label="Administration summary">
         <article class="dashboard-stat card">
             <span class="dashboard-stat-label">Advisees</span>
-            <strong><?= e((int) floor((int) $advisees['total'] / 1000)) ?></strong>
+            <strong><?= e($advisees['total']) ?></strong>
             <span class="dashboard-stat-note">Advisor assignments</span>
         </article>
 
         <article class="dashboard-stat card">
             <span class="dashboard-stat-label">Assigned sections</span>
-            <strong><?= e(round((int) $assignedSections['total'] / 1000)) ?></strong>
+            <strong><?= e($assignedSections['total']) ?></strong>
             <span class="dashboard-stat-note">Course sections</span>
+        </article>
+
+        <article class="dashboard-stat card">
+            <span class="dashboard-stat-label">Total enrollments</span>
+            <strong><?= e($totalEnrollments['total']) ?></strong>
+            <span class="dashboard-stat-note">Active enrollment records</span>
         </article>
     </section>
 
