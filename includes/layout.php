@@ -1,55 +1,55 @@
+
 <?php
 
 require_once __DIR__ . '/auth.php';
 
-
-// Navigation links for each type of user
+// Navigation links for each user role
 function nav_items(string $role): array
 {
     switch ($role) {
 
         case 'Student':
             return [
-                ['Overview', '/student/dashboard.php'],
-                ['Course Registration', '/student/registration.php'],
-                ['My Schedule', '/student/schedule.php'],
-                ['Master Schedule', '/faculty/master-schedule.php'],
-                ['Unofficial Transcript', '/student/transcript.php'],
-                ['Degree Audit', '/student/degree-audit.php'],
-                ['Holds', '/student/holds.php'],
-                ['My Advisor', '/student/advisor.php'],
-                ['Majors & Minors', '/student/programs.php'],
-                ['Catalog', '/student/catalog.php'],
-                ['Buildings', '/student/buildings.php'],
-                ['My Information', '/student/information.php']
+                ['Overview', '/student/dashboard.php', '▦'],
+                ['Course Registration', '/student/registration.php', '✎'],
+                ['My Schedule', '/student/schedule.php', '▤'],
+                ['Master Schedule', '/faculty/master-schedule.php', '▦'],
+                ['Unofficial Transcript', '/student/transcript.php', '▤'],
+                ['Degree Audit', '/student/degree-audit.php', '✓'],
+                ['Holds', '/student/holds.php', '⚑'],
+                ['My Advisor', '/student/advisor.php', '♙'],
+                ['Majors & Minors', '/student/programs.php', '◈'],
+                ['Catalog', '/student/catalog.php', '▣'],
+                ['Buildings', '/student/buildings.php', '⌂'],
+                ['My Information', '/student/information.php', '♙']
             ];
 
         case 'Faculty':
             return [
-                ['Overview', '/faculty/dashboard.php'],
-                ['My Schedule', '/faculty/schedule.php'],
-                ['Master Schedule', '/faculty/master-schedule.php'],
-                ['Course Rosters', '/faculty/rosters.php'],
-                ['Attendance History', '/faculty/attendance-history.php'],
-                ['Advisees', '/faculty/advisees.php'],
-                ['Catalog', '/faculty/catalog.php'],
-                ['My Profile', '/faculty/profile.php']
+                ['Overview', '/faculty/dashboard.php', '▦'],
+                ['My Schedule', '/faculty/schedule.php', '▤'],
+                ['Master Schedule', '/faculty/master-schedule.php', '▦'],
+                ['Course Rosters', '/faculty/rosters.php', '♙'],
+                ['Attendance History', '/faculty/attendance-history.php', '✓'],
+                ['Advisees', '/faculty/advisees.php', '♙'],
+                ['Catalog', '/faculty/catalog.php', '▣'],
+                ['My Profile', '/faculty/profile.php', '◉']
             ];
 
         case 'Admin':
             return [
-                ['Overview', '/admin/dashboard.php'],
-                ['Users', '/admin/users.php'],
-                ['Academic Management', '/admin/academic.php'],
-                ['Sections', '/admin/sections.php'],
-                ['Master Schedule', '/faculty/master-schedule.php']
+                ['Overview', '/admin/dashboard.php', '▦'],
+                ['Users', '/admin/users.php', '♙'],
+                ['Academic Management', '/admin/academic.php', '▣'],
+                ['Course Sections', '/admin/sections.php', '▤'],
+                ['Master Schedule', '/faculty/master-schedule.php', '▦']
             ];
 
         case 'StatStaff':
             return [
-                ['Overview', '/statistics/dashboard.php'],
-                ['Anonymous Reports', '/statistics/reports.php'],
-                ['Master Schedule', '/faculty/master-schedule.php']
+                ['Overview', '/statistics/dashboard.php', '▦'],
+                ['Anonymous Reports', '/statistics/reports.php', '▤'],
+                ['Master Schedule', '/faculty/master-schedule.php', '▦']
             ];
 
         default:
@@ -68,11 +68,22 @@ function page_start(
     $name = $_SESSION['name'] ?? 'User';
     $email = $_SESSION['email'] ?? '';
 
+    // Keep the original role for sidebar navigation
+    $portalRole = $role;
+
+    // Display System Admin for security level 1
+    if ($role === 'Admin') {
+        global $pdo;
+
+        if (isset($pdo) && $pdo instanceof PDO) {
+            $portalRole = admin_display_title($pdo);
+        }
+    }
 
     if ($role === 'StatStaff') {
         $portalName = 'Statistics Portal';
     } else {
-        $portalName = $role . ' Portal';
+        $portalName = $portalRole . ' Portal';
     }
 
     ?>
@@ -81,7 +92,6 @@ function page_start(
     <html lang="en">
 
     <head>
-
         <meta charset="UTF-8">
 
         <meta
@@ -97,7 +107,6 @@ function page_start(
             rel="stylesheet"
             href="/assets/css/style.css"
         >
-
     </head>
 
     <body>
@@ -111,22 +120,18 @@ function page_start(
             </div>
 
             <div>
-
                 <b>Ashford University</b>
 
                 <small>
                     <?= e($portalName) ?>
                 </small>
-
             </div>
 
         </div>
 
-
         <div class="account">
 
             <div>
-
                 <strong>
                     <?= e($name) ?>
                 </strong>
@@ -134,7 +139,6 @@ function page_start(
                 <small>
                     <?= e($email) ?>
                 </small>
-
             </div>
 
             <a
@@ -159,20 +163,32 @@ function page_start(
 
                 $label = $item[0];
                 $url = $item[1];
+                $icon = $item[2] ?? '•';
 
-                if ($active === $url) {
-                    $class = 'active';
-                } else {
-                    $class = '';
-                }
+                $activePath = '/' . ltrim($active, '/');
+
+                $class = (
+                    $active === $url ||
+                    $activePath === $url
+                ) ? 'active' : '';
 
                 ?>
 
                 <a
-                    class="<?= $class ?>"
+                    class="<?= e($class) ?>"
                     href="<?= e($url) ?>"
+                    style="display:flex;align-items:center;gap:12px;"
                 >
-                    <?= e($label) ?>
+                    <span
+                        aria-hidden="true"
+                        style="width:20px;text-align:center;flex-shrink:0;"
+                    >
+                        <?= e($icon) ?>
+                    </span>
+
+                    <span>
+                        <?= e($label) ?>
+                    </span>
                 </a>
 
             <?php endforeach; ?>
@@ -199,7 +215,7 @@ function page_end(): void
 
     </div>
 
-    <script src="/Ashford-University/assets/js/app.js"></script>
+    <script src="/assets/js/app.js"></script>
 
     </body>
     </html>
@@ -228,3 +244,4 @@ function flash(): void
 }
 
 ?>
+
