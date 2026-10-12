@@ -1,14 +1,21 @@
+# Environment variables and secrets
 .env
 .env.*
 !.env.example
 
-*.log
-*.sql.gz
-*.bak
-*.tmp
+# AWS credentials
+.aws/
+credentials
+*.pem
+*.key
 
+# Composer dependencies
 /vendor/
-/node_modules/
-/.idea/
-.vscode/
+
+# Mac system files
 .DS_Store
+
+# Logs
+*.log
+.env
+.env.*

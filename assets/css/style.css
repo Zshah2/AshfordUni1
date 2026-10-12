@@ -1139,3 +1139,54 @@ label {
         padding: 20px;
     }
 }
+
+
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Smooth sidebar interaction */
+.sidebar a {
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+/* Hover */
+.sidebar a:hover:not(.active) {
+    background: #e9edf5;
+    color: #142a4f;
+    transform: translateX(2px);
+}
+
+/* Selected menu */
+.sidebar a.active,
+.sidebar a[aria-current="page"] {
+    background: linear-gradient(
+        110deg,
+        #1e3366,
+        #152a4e
+    );
+    color: #ffffff;
+    font-weight: 700;
+}
+
+/* Keep selected item highlighted */
+.sidebar a.active:hover {
+    color: #ffffff;
+    transform: none;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .sidebar a {
+        transition: none;
+    }
+}
