@@ -7,7 +7,10 @@
  *
  * Sender: zshah2@oldwestbury.edu
  * Region: us-east-1
- * AWS Profile: ashford-ses
+ *
+ * Authentication:
+ * Uses the AWS SDK default credential provider chain.
+ * On EC2, credentials are obtained from the attached IAM role.
  *
  * Used by the login OTP authentication system.
  */
@@ -15,7 +18,6 @@
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 use Aws\SesV2\SesV2Client;
-use Aws\Credentials\CredentialProvider;
 
 /**
  * Send a six-digit login verification code.
@@ -31,7 +33,6 @@ function send_ses_otp(string $recipient, string $otp): bool
     $senderName = 'Ashford University';
 
     $region = 'us-east-1';
-    $awsProfile = 'ashford-ses';
 
     // Validate input
     if (
@@ -227,7 +228,6 @@ function send_ses_otp(string $recipient, string $otp): bool
                 line-height:1.6;
             ">
                 Ashford University
-                <br>
                 Automated Account Security Notification
             </p>
 
@@ -254,7 +254,7 @@ HTML;
     |--------------------------------------------------------------------------
     */
 
-    $text = 
+    $text =
         "ASHFORD UNIVERSITY\n" .
         "Account Security\n\n" .
         "Your Login Verification Code\n\n" .
@@ -274,16 +274,15 @@ HTML;
 
     try {
 
-        // Load credentials from the local AWS profile
-        $credentials = CredentialProvider::memoize(
-            CredentialProvider::ini($awsProfile)
-        );
+        // Initialize Amazon SES using the AWS default
+        // credential provider chain.
+        //
+        // On EC2, the SDK automatically uses the
+        // IAM role attached to the instance.
 
-        // Initialize Amazon SES client
         $client = new SesV2Client([
             'version' => 'latest',
-            'region' => $region,
-            'credentials' => $credentials
+            'region' => $region
         ]);
 
         // Send OTP email
